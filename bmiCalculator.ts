@@ -17,14 +17,12 @@ const selectValues = (args: string[]) : PersonDetails => {
       }
 }
 
-const calculateBmi = (height: number, kilos: number) => {
+export const calculateBmi = (height: number, kilos: number) : string => {
     const heightInMeters = height / 100;
 
     const squareHeight = heightInMeters ** 2;
     
     const bmi = kilos / squareHeight;
-
-    // console.log(bmi)
 
     switch (true) {
         case (bmi < 18.5):
@@ -36,6 +34,8 @@ const calculateBmi = (height: number, kilos: number) => {
         case (bmi >= 30):
             return "Not health (obese)";
     }
+
+    return "Unable to calculate BMI"
 }
 
 try {
