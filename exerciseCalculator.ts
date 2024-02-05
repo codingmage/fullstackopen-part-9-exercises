@@ -8,7 +8,36 @@ interface ExerciseDetails {
     average: number
 }
 
-const calculateExercises = (daily: number[], target: number) : ExerciseDetails => {
+interface Arguments {
+    goal: number,
+    trainingHours: number[],
+}
+
+const selectNumbers = (args: string[])  : Arguments  => {
+    if (args.length < 4) throw new Error('Please provide your training hours and your target goal.');
+
+    if (!isNaN(Number(args[2]))) {
+        
+        const goal = Number(args[2])
+
+        let hours = []
+    
+        for (let i = 3; i < args.length; i++) {
+            if (!isNaN(Number(args[i]))) {
+                hours.push(Number(args[i]))
+            } else {
+                throw new Error("Hours must be numbers")
+            }            
+        }
+    
+        return {goal, trainingHours: hours}
+
+    } else {
+        throw new Error('Provided target must be a number!');
+    }
+}
+
+const calculateExercises = (target: number, daily: number[]) : ExerciseDetails => {
 
     const daysLength = daily.length;
 
@@ -32,7 +61,7 @@ const calculateExercises = (daily: number[], target: number) : ExerciseDetails =
     let success = false;
 
     if (averageHours < target) {
-        if ((averageHours + 1) < target) {
+        if ((averageHours + 0.5) < target) {
             rating = 1;
             description = "You gotta pump up those numbers.";
         } else {
@@ -41,7 +70,7 @@ const calculateExercises = (daily: number[], target: number) : ExerciseDetails =
         }
     } else {
         rating = 3
-        description = "Target met! Yippee"
+        description = "Target met! Yippee!"
         success = true
     }
 
@@ -58,4 +87,18 @@ const calculateExercises = (daily: number[], target: number) : ExerciseDetails =
     return results;
 }
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2))
+try {
+    const {goal, trainingHours} = selectNumbers(process.argv)
+    console.log(calculateExercises(goal, trainingHours))
+    
+} catch (error: unknown) {
+    let errorMessage = 'Something bad happened.';
+    if (error instanceof Error) {
+      errorMessage += ' Error: ' + error.message;
+    }
+    console.log(errorMessage);
+}
+
+/* console.log(calculateExercises(2, [3, 0, 2, 4.5, 0, 3, 1], ))
+
+console.log(selectNumbers(process.argv)) */
