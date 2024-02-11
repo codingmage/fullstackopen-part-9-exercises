@@ -6,4 +6,5 @@ const getDiagnoses = (): Diagnosis[] => {
 	return diagnoses;
 };
 
+
 export default { getDiagnoses };
