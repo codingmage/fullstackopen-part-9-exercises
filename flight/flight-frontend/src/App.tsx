@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import { DiaryEntry, Visibility, Weather } from "./types";
 import entryService from "./services/entries";
+import axios from "axios";
 
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
 	const [visibility, setVisibility] = useState<string>("");
 	const [weather, setWeather] = useState<string>("");
 	const [comment, setComment] = useState<string>("");
+	const [error, setError] = useState<string>("");
 
 	useEffect(() => {
 
@@ -23,16 +25,31 @@ function App() {
 
 	const createEntry = async (event: React.SyntheticEvent) => {
 		event.preventDefault();
-		const addedEntry = await entryService.addEntry({date, comment,visibility: visibility as Visibility, weather: weather as Weather});
-		// setEntries([...entries!, addedEntry]);
-		const withEntry = entries?.concat(addedEntry);
-		setEntries(withEntry);
+		try {
+			const addedEntry = await entryService.addEntry({date, comment,visibility: visibility as Visibility, weather: weather as Weather});
+			// setEntries([...entries!, addedEntry]);
+			const withEntry = entries?.concat(addedEntry);
+			setEntries(withEntry);
+		} catch (error) {
+			if (axios.isAxiosError(error)) {
+				setError(error.response?.data as string);
+				setTimeout(() => {
+					setError("");
+				}, 5000);
+			} else {
+				setError("An unknown error has occurred.");
+				setTimeout(() => {
+					setError("");
+				}, 5000);
+			}
+		}
 	};
 
 	return (
 		<div>
 			<div>
 				<h3>Add new entries: </h3>
+				{ error ? <span>{error}</span> : "" }
 				<form onSubmit={createEntry}>
 					<div> <label>date</label> <input value={date} onChange={(e) => setDate(e.target.value)} /> </div>
 					<div> <label>visibility</label> <input value={visibility} onChange={(e) => setVisibility(e.target.value)}/> </div>
@@ -51,7 +68,6 @@ function App() {
 						<div>visibility: {entry.visibility}</div>
 						<div>weather: {entry.weather}</div>
 					</div>
-            
 				)) : <div>Loading...</div>}
 			</div>
 		</div>
