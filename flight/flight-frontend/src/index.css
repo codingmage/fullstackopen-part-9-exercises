@@ -64,6 +64,22 @@ input {
   float: left;
 }
 
+.options {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.errorMessage {
+  color: red;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
