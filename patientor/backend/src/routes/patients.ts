@@ -36,4 +36,16 @@ patientRouter.post("/", (req, res) => {
 	
 });
 
+patientRouter.get(`/:id`, (req, res) => {
+	const patientId = req.params.id
+
+	const patient = patientsService.getSpecificPatient(patientId)
+
+	if (!patient) {
+		res.status(404).send("Patient not found")
+	} else {
+		res.send(patient)
+	}
+})
+
 export default patientRouter;

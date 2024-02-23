@@ -14,6 +14,17 @@ const getPatientsWithoutSSN = (): EditedPatient[] => {
 	);
 };
 
+const getSpecificPatient = (id: string): Patient | null => {
+	const thisPatient = patients.find((p) => p.id === id)
+
+	if (thisPatient) {
+		return thisPatient
+	} else {
+		return null
+	}
+
+}
+
 const addPatient = (patientData: NewPatient): Patient => {
 	const newPatient = {
 		id: uuid(),
@@ -24,4 +35,4 @@ const addPatient = (patientData: NewPatient): Patient => {
 	return newPatient;
 };
 
-export default {getPatientsWithoutSSN, addPatient};
+export default {getPatientsWithoutSSN, addPatient, getSpecificPatient};
