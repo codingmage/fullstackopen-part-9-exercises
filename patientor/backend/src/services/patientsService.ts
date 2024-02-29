@@ -1,6 +1,6 @@
 import patients from "../../data/patients";
 
-import { EditedPatient, Patient, NewPatient } from "../types";
+import { EditedPatient, Patient, NewPatient, EntryWithoutId } from "../types";
 import { v4 as uuid } from "uuid";
 
 const getPatientsWithoutSSN = (): EditedPatient[] => {
@@ -34,5 +34,9 @@ const addPatient = (patientData: NewPatient): Patient => {
 	patients.push(newPatient);
 	return newPatient;
 };
+
+const addEntryToPatient = (id: string, entryData: EntryWithoutId): Entry => {
+	
+}
 
 export default {getPatientsWithoutSSN, addPatient, getSpecificPatient};

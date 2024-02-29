@@ -1,10 +1,10 @@
 import express from "express";
 import diagnosisService from "../services/diagnosisService";
 
-const router = express.Router();
+const diagnosesRouter = express.Router();
 
-router.get("/", (_req, res) => {
+diagnosesRouter.get("/", (_req, res) => {
 	res.send(diagnosisService.getDiagnoses());
 });
 
-export default router;
+export default diagnosesRouter;

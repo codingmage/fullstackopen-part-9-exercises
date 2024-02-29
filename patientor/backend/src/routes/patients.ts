@@ -1,6 +1,6 @@
 import express from "express";
 import patientsService from "../services/patientsService";
-import toNewPatient from "../utils";
+import { toNewPatient }from "../utils";
 
 const patientRouter = express.Router();
 
@@ -45,6 +45,20 @@ patientRouter.get(`/:id`, (req, res) => {
 		res.status(404).send("Patient not found")
 	} else {
 		res.send(patient)
+	}
+})
+
+patientRouter.post(`/:id/entries`, (req, res) => {
+	try {
+		// convert to entry
+		// post entry 
+		
+	} catch (error: unknown) {
+		let errorMessage = "Error: ";
+		if(error instanceof Error) {
+			errorMessage += error.message;
+		}
+		res.status(400).send(errorMessage);
 	}
 })
 
