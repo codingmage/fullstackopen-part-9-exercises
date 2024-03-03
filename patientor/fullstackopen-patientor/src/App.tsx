@@ -15,7 +15,7 @@ import SinglePatientPage from "./components/SinglePatientPage";
 const App = () => {
   const [patients, setPatients] = useState<Patient[]>([]);
   const [patient, setPatient] = useState<Patient | null>(null);
-  const [diagnoses, setDiagonoses] = useState<Diagnosis[]>([]);
+  const [diagnoses, setDiagnoses] = useState<Diagnosis[]>([]);
   const [loading, setLoading] = useState(false);
 
   const match = useMatch("/patients/:id");
@@ -36,7 +36,7 @@ const App = () => {
 
     const fetchDiagnoses = async () => {
       const diagnosesArray = await diagnosesService.getDiagnosis();
-      setDiagonoses(diagnosesArray);
+      setDiagnoses(diagnosesArray);
     };
 
     fetchDiagnoses();
